@@ -79,3 +79,62 @@ TEST(NearestCentralTest, PrintNearestCentral) {
     // Verificar que la salida sea la esperada
     EXPECT_EQ(output, "4.\n(450,150)\n");
 }
+
+TEST(NearestCentralTest, ReadCentralesInvalidQuery) {
+    // Redirigir std::cerr para capturar el mensaje de error
+    testing::internal::CaptureStderr();
+
+    // Entrada con un punto de consulta inválido
+    std::istringstream input_stream("(400,300)\n(300,400)\n(450,150)\nINVALID"); // "INVALID" es inválido
+    std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
+
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(3, centrales, query);
+
+    // Obtener el error capturado
+    std::string error_output = testing::internal::GetCapturedStderr();
+
+    // Verificar que el error esperado esté presente
+    EXPECT_NE(error_output.find("Error al parsear punto de consulta: INVALID"), std::string::npos);
+}
+
+TEST(NearestCentralTest, ReadCentralesInvalidPoint) {
+    // Redirigir std::cerr para capturar el mensaje de error
+    testing::internal::CaptureStderr();
+
+    // Entrada con un punto inválido
+    std::istringstream input_stream("(400,300)\nINVALID\n(450,150)"); // "INVALID" es inválido
+    std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
+
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(3, centrales, query);
+
+    // Obtener el error capturado
+    std::string error_output = testing::internal::GetCapturedStderr();
+
+    // Verificar que el error esperado esté presente
+    EXPECT_NE(error_output.find("Error al parsear punto: INVALID"), std::string::npos);
+    EXPECT_EQ(centrales.size(), 2);  // El punto inválido no debe haberse agregado
+}
+
+TEST(NearestCentralTest, ReadCentralesEmptyLine) {
+    // Redirigir std::cerr para capturar el mensaje de error
+    testing::internal::CaptureStderr();
+
+    // Entrada con una línea vacía
+    std::istringstream input_stream("(400,300)\n\n(450,150)"); // La segunda línea está vacía
+    std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
+
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(3, centrales, query);
+
+    // Obtener el error capturado
+    std::string error_output = testing::internal::GetCapturedStderr();
+
+    // Verificar que el mensaje de línea vacía haya sido impreso
+    EXPECT_NE(error_output.find("Línea vacía detectada, ignorando..."), std::string::npos);
+    EXPECT_EQ(centrales.size(), 2);  // Solo dos puntos válidos deben haber sido leídos
+}
