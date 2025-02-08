@@ -49,7 +49,6 @@ if(ENABLE_TESTING)
         tests/traveling.cpp
         tests/ford_fulkerson.cpp
         tests/nearest_central.cpp
-        tests/main_test.cpp
     )
 
     # Para cada archivo de prueba se crea un ejecutable y se registra en CTest
