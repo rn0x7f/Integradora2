@@ -31,8 +31,20 @@ struct UnionFind {
     }
 };
 
+/**
+ * @brief Ejecuta el algoritmo de Kruskal para encontrar el árbol de expansión mínima.
+ * 
+ * @param N Número de nodos en el grafo.
+ * @param distance_matrix Matriz de adyacencia con los pesos de las aristas.
+ * @return std::vector<std::pair<int, int>> Lista de aristas en el MST.
+ */
 std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vector<int>>& distance_matrix);
 
+/**
+ * @brief Imprime las aristas del árbol de expansión mínima.
+ * 
+ * @param mst_edges Lista de aristas en el MST.
+ */
 void print_mst(const std::vector<std::pair<int, int>>& mst_edges);
 
 #endif // KRUSKALLIB_H
