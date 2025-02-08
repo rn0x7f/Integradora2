@@ -10,7 +10,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 set(SOURCES
     main.cpp  
     KruskalLib.cpp
-    TravelingLib.cpp  # Agregado TravelingLib.cpp
+    TravelingLib.cpp
     FordFulkersonLib.cpp
     NearestCentralLib.cpp
 )
@@ -22,12 +22,10 @@ add_executable(unit_test ${SOURCES})
 option(ENABLE_TESTING "Enable a Unit Testing build." ON)
 option(ENABLE_COVERAGE "Enable code coverage instrumentation." OFF)
 
-# Si se habilita la cobertura, se agregan las flags necesarias para GCC/Clang
+# Configuración para la instrumentación de cobertura
 if(ENABLE_COVERAGE)
     message(STATUS "Enabling code coverage flags")
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        # Las banderas --coverage generan los archivos .gcno y .gcda necesarios para gcov/gcovr.
-        # Se recomienda usar -O0 para evitar que las optimizaciones interfieran con la cobertura.
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
     endif()
@@ -42,7 +40,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# Si se habilitan las pruebas, se configuran las pruebas unitarias
+# Configuración de pruebas unitarias
 if(ENABLE_TESTING)
     enable_testing()
 
@@ -54,19 +52,13 @@ if(ENABLE_TESTING)
         tests/nearest_central.cpp
     )
 
-    # Para cada archivo de prueba se crea un ejecutable y se registra la prueba en CTest
+    # Para cada archivo de prueba se crea un ejecutable y se registra en CTest
     foreach(TEST_FILE ${TEST_SOURCES})
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
-        
-        # Se define un nombre único para el ejecutable de prueba
         set(EXEC_NAME "unit_test_${TEST_NAME}")
         add_executable(${EXEC_NAME} ${TEST_FILE} 
             KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
-
-        # Se enlaza con GoogleTest
         target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
-
-        # Se registra la prueba
         add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
     endforeach()
 endif()
