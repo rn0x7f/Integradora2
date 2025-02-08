@@ -19,13 +19,16 @@ jobs:
 
       - name: Configure, Build, and Test
         run: |
-          mkdir -p build  # Crear la carpeta build
+          mkdir -p build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON  # Habilita la cobertura
           cmake --build .
           ctest --output-on-failure
-          # Genera informe de cobertura (ejemplo para gcovr)
-          gcovr --xml --output coverage.xml  # Genera el archivo coverage.xml
+          # Genera informe de cobertura en formato SonarQube
+          gcovr --sonarqube --output build/coverage.xml  # Formato adecuado para SonarQube
+
+      - name: List files in build directory
+        run: ls -l build  # Verifica que coverage.xml se haya generado
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4  # Actualizado a la versión 4
@@ -47,6 +50,9 @@ jobs:
         with:
           name: coverage-report
           path: build/
+
+      - name: List files in build directory (Sonar)
+        run: ls -l build  # Verifica que coverage.xml esté disponible para SonarQube
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v3
