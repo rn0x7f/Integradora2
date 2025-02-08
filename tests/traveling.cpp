@@ -11,14 +11,14 @@ TEST(TravelingTest, BasicTSP) {
         {32, 21, 7, 0}
     };
 
-    // Camino esperado: A -> B -> C -> D -> A (Índices 0, 1, 2, 3, 0)
-    std::vector<int> expected_complete_path = {0, 1, 2, 3, 0};  // Camino completo (A -> B -> C -> D -> A)
+    // El recorrido esperado ahora incluye el regreso al punto A
+    std::vector<int> expected_path = {0, 1, 2, 3, 0};  // A -> B -> C -> D -> A
     
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
 
     // Verificar que el recorrido más corto encontrado sea el esperado
-    ASSERT_EQ(best_path.size(), expected_complete_path.size());
+    ASSERT_EQ(best_path.size(), expected_path.size());
     for (int i = 0; i < best_path.size(); ++i) {
-        EXPECT_EQ(best_path[i], expected_complete_path[i]);
+        EXPECT_EQ(best_path[i], expected_path[i]);
     }
 }
