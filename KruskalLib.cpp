@@ -17,7 +17,7 @@ std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vecto
     std::vector<std::pair<int, int>> mst_edges;
 
     for (const Edge& e : edges) {
-        if (uf.find(e.u) != uf.find(e.v)) {
+        if (uf.Find(e.u) != uf.Find(e.v)) {
             uf.unite(e.u, e.v);
             mst_edges.emplace_back(e.u, e.v);
         }
