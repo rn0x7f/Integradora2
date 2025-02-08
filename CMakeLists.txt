@@ -52,16 +52,18 @@ if(ENABLE_TESTING)
         tests/nearest_central.cpp
     )
 
+    # Para cada archivo de prueba se crea un ejecutable y se registra en CTest
     foreach(TEST_FILE ${TEST_SOURCES})
-    get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
-    set(EXEC_NAME "unit_test_${TEST_NAME}")
-    add_executable(${EXEC_NAME} ${TEST_FILE} 
-        KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
-    target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
-    # Añadir flags de cobertura explícitamente
-    if(ENABLE_COVERAGE)
-        target_compile_options(${EXEC_NAME} PRIVATE --coverage)
-        target_link_libraries(${EXEC_NAME} PRIVATE --coverage)
-    endif()
-    add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
-endforeach()
+        get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+        set(EXEC_NAME "unit_test_${TEST_NAME}")
+        add_executable(${EXEC_NAME} ${TEST_FILE} 
+            KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
+        target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
+        # Añadir flags de cobertura explícitamente
+        if(ENABLE_COVERAGE)
+            target_compile_options(${EXEC_NAME} PRIVATE --coverage)
+            target_link_libraries(${EXEC_NAME} PRIVATE --coverage)
+        endif()
+        add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
+    endforeach()
+endif()
