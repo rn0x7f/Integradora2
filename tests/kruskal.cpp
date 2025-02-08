@@ -1,5 +1,6 @@
 
 #include <gtest/gtest.h>
+#include <sstream>
 #include "../include/KruskalLib.h"
 
 // Caso de prueba para el algoritmo de Kruskal
@@ -49,4 +50,27 @@ TEST(KruskalTest, DisconnectedGraph) {
 
     // Un grafo desconectado no debe tener ninguna arista en el MST
     ASSERT_TRUE(mst_edges.empty());
+}
+
+
+TEST(KruskalTest, PrintMST) {
+    // Simular el MST con un conjunto de aristas (pares de vértices)
+    std::vector<std::pair<int, int>> mst_edges = {
+        {0, 1},
+        {1, 2},
+        {2, 3}
+    };
+
+    // Redirigir la salida estándar para capturar la impresión
+    testing::internal::CaptureStdout();
+
+    // Llamar a la función print_mst que se está probando
+    print_mst(mst_edges);
+
+    // Obtener la salida capturada
+    std::string output = testing::internal::GetCapturedStdout();
+
+    // Comprobar que la salida sea la esperada
+    std::string expected_output = "1.\n(A, B)\n(B, C)\n(C, D)\n";
+    EXPECT_EQ(output, expected_output);
 }
