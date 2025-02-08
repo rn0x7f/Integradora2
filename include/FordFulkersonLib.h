@@ -43,7 +43,7 @@ public:
          * 
          * @param amount Cantidad de flujo a agregar.
          */
-        void add_flow(int amount);
+        void AddFlow(int amount);
     };
 
     /**
@@ -63,12 +63,12 @@ public:
      * 
      * @return int Flujo máximo encontrado.
      */
-    int compute_max_flow();
+    int ComputeMaxFlow();
 
     /**
      * @brief Imprime el flujo máximo calculado.
      */
-    void print_max_flow();
+    void PrintMaxFlow();
 
 private:
     int n_;   ///< Número de nodos en el grafo.

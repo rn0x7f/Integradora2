@@ -17,7 +17,7 @@ int FordFulkerson::FFEdge::Remaining() const {
 /**
  * @brief Agrega flujo a la arista y actualiza la arista inversa.
  */
-void FordFulkerson::FFEdge::add_flow(int amount) {
+void FordFulkerson::FFEdge::AddFlow(int amount) {
     flow += amount;
     reverse->flow -= amount;
 }
@@ -52,7 +52,7 @@ FordFulkerson::FordFulkerson(int n, const std::vector<std::vector<int>>& capacit
  *
  * @return int Flujo máximo encontrado.
  */
-int FordFulkerson::compute_max_flow() {
+int FordFulkerson::ComputeMaxFlow() {
     int source = 0;
     int sink = n_ - 1;
     maxFlow_ = 0;
@@ -88,7 +88,7 @@ int FordFulkerson::compute_max_flow() {
 
         // Se actualiza el flujo a lo largo del camino aumentante
         for (int v = sink; v != source; v = pred[v]->reverse->to) {
-            pred[v]->add_flow(pathFlow);
+            pred[v]->AddFlow(pathFlow);
         }
 
         maxFlow_ += pathFlow;
@@ -100,7 +100,7 @@ int FordFulkerson::compute_max_flow() {
 /**
  * @brief Imprime el flujo máximo calculado.
  */
-void FordFulkerson::print_max_flow() {
+void FordFulkerson::PrintMaxFlow() {
     std::cout << "3." << std::endl;
     std::cout << maxFlow_ << std::endl;
 }
