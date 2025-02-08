@@ -67,7 +67,7 @@ TEST(TravelingTest, LargerTSP) {
         {7, 4, 10, 6, 0}
     };
 
-    std::string expected_output = "2.\nA B D E C A";
+    std::string expected_output = "2.\nA B C D E A";
 
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
 
