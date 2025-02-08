@@ -1,9 +1,6 @@
-
-// tests/nearest_central.cpp
 #include "../include/NearestCentralLib.h"
 #include <gtest/gtest.h>
 #include <sstream>
-
 
 TEST(NearestCentralTest, ClosestPoint) {
     std::vector<Point> centrales = {
@@ -43,6 +40,37 @@ TEST(NearestCentralTest, ReadCentrales) {
     EXPECT_EQ(query.y, 150);  // Verificar que se leyeron correctamente las coordenadas del punto de consulta
 }
 
+TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
+    std::istringstream input_stream("(400,300)\n\n(300,400)\n(450,150)"); // La segunda línea está vacía
+    std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
+
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(3, centrales, query);
+
+    // Verificar que las centrales se leyeron correctamente, a pesar de la línea vacía
+    EXPECT_EQ(centrales.size(), 3);  // La línea vacía debería ser ignorada
+    EXPECT_EQ(centrales[0].x, 400);
+    EXPECT_EQ(centrales[0].y, 300);
+    EXPECT_EQ(query.x, 450);
+    EXPECT_EQ(query.y, 150);
+}
+
+TEST(NearestCentralTest, ReadCentralesWithInvalidPoint) {
+    std::istringstream input_stream("(400,300)\nINVALID\n(300,400)\n(450,150)"); // "INVALID" es un formato incorrecto
+    std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
+
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(3, centrales, query);
+
+    // Verificar que la entrada inválida es ignorada
+    EXPECT_EQ(centrales.size(), 3);  // La línea "INVALID" debe ser ignorada
+    EXPECT_EQ(centrales[0].x, 400);
+    EXPECT_EQ(centrales[0].y, 300);
+    EXPECT_EQ(query.x, 450);
+    EXPECT_EQ(query.y, 150);
+}
 
 TEST(NearestCentralTest, PrintNearestCentral) {
     Point central = {450, 150};
