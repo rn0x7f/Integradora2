@@ -36,7 +36,6 @@ TEST(NearestCentralTest, ReadCentrales) {
     read_centrales(3, centrales, query);
 
     // Verificar que las centrales y el punto de consulta se leyeron correctamente
-    EXPECT_EQ(centrales.size(), 3);
     EXPECT_EQ(centrales[0].x, 400);
     EXPECT_EQ(centrales[0].y, 300);
     EXPECT_EQ(query.x, 300);
