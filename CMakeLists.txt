@@ -14,9 +14,6 @@ set(SOURCES
     src/NearestCentralLib.cpp
 )
 
-# Crear ejecutable principal
-add_executable(unit_test ${SOURCES})
-
 # Opciones para pruebas y cobertura
 option(ENABLE_TESTING "Enable a Unit Testing build." ON)
 option(ENABLE_COVERAGE "Enable code coverage instrumentation." OFF)
