@@ -24,8 +24,8 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON
           cmake --build .
           ctest --output-on-failure
-          # Genera el reporte de cobertura en la raíz, excluyendo dependencias y tests
-          gcovr --sonarqube --exclude '_deps' --exclude 'tests' --output ../coverage.xml
+          # Añadir --root .. para rutas correctas
+          gcovr --root .. --sonarqube --exclude '_deps' --exclude 'tests' --output ../coverage.xml
 
       - name: List files in root directory
         run: ls -l
@@ -38,6 +38,15 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
+
+      - name: Generate Coverage Report
+            run: |
+              cd build
+              gcovr --root .. \
+                    --sonarqube \
+                    --exclude '_deps' \
+                    --exclude 'tests' \
+                    --output ../coverage.xml
 
   sonar_analysis:
     name: SonarQube Analysis
