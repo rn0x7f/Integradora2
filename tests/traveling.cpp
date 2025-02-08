@@ -13,7 +13,7 @@ TEST(TravelingTest, BasicTSP) {
     };
 
     // El recorrido esperado ahora incluye el regreso al punto A
-    std::string expected_output = "A B C D A ";
+    std::string expected_output = "2.\nA B C D A ";
 
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
 
