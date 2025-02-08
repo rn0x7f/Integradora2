@@ -56,7 +56,7 @@ TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
     EXPECT_EQ(query.y, 150);
 }
 
-TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
+TEST(NearestCentralTest, ReadCentralesWithEmptyLineAndDefaultQuery) {  // Renombrado
     std::istringstream input_stream("(400,300)\n(100,200)\n(300,400)\n\n(450,150)"); // Línea vacía antes del punto de consulta
     std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
 
@@ -68,7 +68,6 @@ TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
     EXPECT_EQ(query.x, 0);  // Cambiado a 0, que es el valor que se asignará en el código cuando la línea está vacía
     EXPECT_EQ(query.y, 0);  // Cambiado a 0
 }
-
 
 TEST(NearestCentralTest, PrintNearestCentral) {
     Point central = {450, 150};
