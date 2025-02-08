@@ -1,5 +1,5 @@
 
-#include "include/KruskalLib.h"
+#include "../include/KruskalLib.h"
 
 std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vector<int>>& distance_matrix) {
     std::vector<Edge> edges;

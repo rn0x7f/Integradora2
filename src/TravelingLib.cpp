@@ -1,5 +1,5 @@
 
-#include "include/TravelingLib.h"
+#include "../include/TravelingLib.h"
 
 /**
  * @brief Resuelve el problema del Viajante de Comercio (TSP) mediante un enfoque de fuerza bruta.

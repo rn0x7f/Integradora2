@@ -8,11 +8,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # Archivos fuente principales
 set(SOURCES
-    main.cpp  
-    KruskalLib.cpp
-    TravelingLib.cpp
-    FordFulkersonLib.cpp
-    NearestCentralLib.cpp
+    src/main.cpp  
+    src/KruskalLib.cpp
+    src/TravelingLib.cpp
+    src/FordFulkersonLib.cpp
+    src/NearestCentralLib.cpp
 )
 
 # Crear ejecutable principal

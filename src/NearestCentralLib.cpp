@@ -1,5 +1,5 @@
 
-#include "include/NearestCentralLib.h"
+#include "../include/NearestCentralLib.h"
 
 /**
  * @brief Parsea una cadena de la forma "(x,y)" y la convierte en un objeto Point.

@@ -4,10 +4,10 @@
 #include <algorithm>
 #include <climits>
 #include <queue>
-#include "include/KruskalLib.h"
-#include "include/TravelingLib.h"
-#include "include/FordFulkersonLib.h"
-#include "include/NearestCentralLib.h"
+#include "../include/KruskalLib.h"
+#include "../include/TravelingLib.h"
+#include "../include/FordFulkersonLib.h"
+#include "../include/NearestCentralLib.h"
 
 int main() {
     int N;

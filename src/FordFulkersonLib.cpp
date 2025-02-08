@@ -1,5 +1,5 @@
 
-#include "include/FordFulkersonLib.h"
+#include "../include/FordFulkersonLib.h"
 
 /**
  * @brief Constructor de la estructura FFEdge.
