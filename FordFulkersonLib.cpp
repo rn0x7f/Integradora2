@@ -1,4 +1,3 @@
-
 #include "include/FordFulkersonLib.h"
 
 /**
@@ -46,6 +45,37 @@ FordFulkerson::FordFulkerson(int n, const std::vector<std::vector<int>>& capacit
 }
 
 /**
+ * @brief Encuentra un camino aumentante usando BFS.
+ */
+std::vector<FordFulkerson::FFEdge*> FordFulkerson::FindAugmentingPath(int source, int sink) {
+    std::vector<FFEdge*> pred(n_, nullptr);
+    std::queue<int> q;
+    q.push(source);
+
+    while (!q.empty() && pred[sink] == nullptr) {
+        int u = q.front();
+        q.pop();
+        for (FFEdge* edge : ffAdj_[u]) {
+            if (pred[edge->to] == nullptr && edge->Remaining() > 0 && edge->to != source) {
+                pred[edge->to] = edge;
+                q.push(edge->to);
+            }
+        }
+    }
+
+    return pred;
+}
+
+/**
+ * @brief Actualiza el flujo a lo largo del camino aumentante.
+ */
+void FordFulkerson::UpdateFlow(int sink, int source, const std::vector<FFEdge*>& pred, int pathFlow) {
+    for (int v = sink; v != source; v = pred[v]->reverse->to) {
+        pred[v]->AddFlow(pathFlow);
+    }
+}
+
+/**
  * @brief Calcula el flujo máximo utilizando el algoritmo de Ford-Fulkerson.
  *
  * Utiliza una búsqueda en anchura (BFS) para encontrar caminos aumentantes y actualiza el flujo.
@@ -58,39 +88,24 @@ int FordFulkerson::ComputeMaxFlow() {
     maxFlow_ = 0;
 
     while (true) {
-        // Vector para almacenar la arista que permite llegar a cada nodo en la BFS (camino aumentante)
-        std::vector<FFEdge*> pred(n_, nullptr);
-        std::queue<int> q;
-        q.push(source);
+        // Encuentra un camino aumentante utilizando BFS
+        std::vector<FFEdge*> pred = FindAugmentingPath(source, sink);
 
-        // Búsqueda en anchura para encontrar un camino aumentante
-        while (!q.empty() && pred[sink] == nullptr) {
-            int u = q.front();
-            q.pop();
-            for (FFEdge* edge : ffAdj_[u]) {
-                if (pred[edge->to] == nullptr && edge->Remaining() > 0 && edge->to != source) {
-                    pred[edge->to] = edge;
-                    q.push(edge->to);
-                }
-            }
-        }
-
-        // Si no se encontró camino aumentante, finaliza el algoritmo
+        // Si no se encontró un camino aumentante, termina el algoritmo
         if (pred[sink] == nullptr) {
             break;
         }
 
+        // Determina el flujo mínimo en el camino aumentante
         int pathFlow = INT_MAX;
-        // Se determina el flujo mínimo en el camino aumentante
         for (int v = sink; v != source; v = pred[v]->reverse->to) {
             pathFlow = std::min(pathFlow, pred[v]->Remaining());
         }
 
-        // Se actualiza el flujo a lo largo del camino aumentante
-        for (int v = sink; v != source; v = pred[v]->reverse->to) {
-            pred[v]->AddFlow(pathFlow);
-        }
+        // Actualiza el flujo a lo largo del camino aumentante
+        UpdateFlow(sink, source, pred, pathFlow);
 
+        // Agrega el flujo del camino aumentante al flujo máximo
         maxFlow_ += pathFlow;
     }
 

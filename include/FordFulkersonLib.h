@@ -1,4 +1,3 @@
-
 #ifndef FORDFULKERSONLIB_H
 #define FORDFULKERSONLIB_H
 
@@ -74,6 +73,12 @@ private:
     int n_;   ///< Número de nodos en el grafo.
     std::vector<std::vector<FFEdge*>> ffAdj_; ///< Lista de adyacencia para las aristas.
     int maxFlow_; ///< Flujo máximo calculado.
+
+    // Función para encontrar un camino aumentante usando BFS
+    std::vector<FFEdge*> FindAugmentingPath(int source, int sink);
+
+    // Función para actualizar el flujo a lo largo del camino aumentante
+    void UpdateFlow(int sink, int source, const std::vector<FFEdge*>& pred, int pathFlow);
 };
 
 #endif // FORDFULKERSONLIB_H
