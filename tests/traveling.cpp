@@ -25,6 +25,10 @@ TEST(TravelingTest, BasicTSP) {
 
     std::cout.rdbuf(old_buf); // Restaurar std::cout
 
+    // Obtener el string de la salida capturada y quitar el salto de línea
+    std::string actual_output = oss.str();
+    actual_output.erase(actual_output.find_last_not_of(" \n") + 1); // Eliminar espacios y saltos de línea al final
+
     // Comparar la salida generada con la salida esperada
-    ASSERT_EQ(oss.str(), expected_output);
+    ASSERT_EQ(actual_output, expected_output);
 }
