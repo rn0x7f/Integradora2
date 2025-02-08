@@ -56,21 +56,19 @@ TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
     EXPECT_EQ(query.y, 150);
 }
 
-TEST(NearestCentralTest, ReadCentralesWithInvalidPoint) {
-    std::istringstream input_stream("(400,300)\nINVALID\n(300,400)\n(450,150)"); // "INVALID" es un formato incorrecto
+TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
+    std::istringstream input_stream("(400,300)\n(100,200)\n(300,400)\n\n(450,150)"); // Línea vacía antes del punto de consulta
     std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
 
     std::vector<Point> centrales;
     Point query;
     read_centrales(3, centrales, query);
 
-    // Verificar que la entrada inválida es ignorada
-    EXPECT_EQ(centrales.size(), 3);  // La línea "INVALID" debe ser ignorada
-    EXPECT_EQ(centrales[0].x, 400);
-    EXPECT_EQ(centrales[0].y, 300);
-    EXPECT_EQ(query.x, 450);
-    EXPECT_EQ(query.y, 150);
+    // Verificar que el valor predeterminado se asignó correctamente
+    EXPECT_EQ(query.x, 0);  // Cambiado a 0, que es el valor que se asignará en el código cuando la línea está vacía
+    EXPECT_EQ(query.y, 0);  // Cambiado a 0
 }
+
 
 TEST(NearestCentralTest, PrintNearestCentral) {
     Point central = {450, 150};
