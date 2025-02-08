@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      # Paso para clonar el repositorio
+      - uses: actions/checkout@v2
+
+      # Paso para instalar dependencias
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake build-essential
+
+      # Paso para configurar, construir y ejecutar las pruebas
+      - name: Configure, Build, and Test
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+          ctest --output-on-failure
+
+  sonar_analysis:
+    name: Run SonarQube Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for better relevancy of analysis
+
+      - uses: sonarsource/sonarqube-scan-action@v3
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      # Uncomment this section if you want to fail the job when the Quality Gate fails
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
