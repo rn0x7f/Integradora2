@@ -13,7 +13,7 @@ TEST(KruskalTest, BasicMST) {
 
     std::vector<std::pair<int, int>> expected_mst = {{0, 1}, {1, 2}, {1, 3}};
     
-    std::vector<std::pair<int, int>> mst_edges = kruskalMST(N, distance_matrix);
+    std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
 
     // Verificar que el MST tenga el mismo número de aristas esperado
     ASSERT_EQ(mst_edges.size(), expected_mst.size());
@@ -29,7 +29,7 @@ TEST(KruskalTest, SingleNode) {
     int N = 1;
     std::vector<std::vector<int>> distance_matrix = {{0}};
 
-    std::vector<std::pair<int, int>> mst_edges = kruskalMST(N, distance_matrix);
+    std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
 
     // Un solo nodo no debe tener ninguna arista en el MST
     ASSERT_TRUE(mst_edges.empty());
@@ -44,7 +44,7 @@ TEST(KruskalTest, DisconnectedGraph) {
         {0, 0, 0}
     };
 
-    std::vector<std::pair<int, int>> mst_edges = kruskalMST(N, distance_matrix);
+    std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
 
     // Un grafo desconectado no debe tener ninguna arista en el MST
     ASSERT_TRUE(mst_edges.empty());

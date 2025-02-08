@@ -31,7 +31,7 @@ struct UnionFind {
     }
 };
 
-std::vector<std::pair<int, int>> kruskalMST(int N, const std::vector<std::vector<int>>& distance_matrix);
+std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vector<int>>& distance_matrix);
 
 void printMST(const std::vector<std::pair<int, int>>& mst_edges);
 

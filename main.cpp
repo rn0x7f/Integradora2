@@ -13,7 +13,7 @@ int main() {
         }
     }
 
-    std::vector<std::pair<int, int>> mst_edges = kruskalMST(N, distance_matrix);
+    std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
     
     printMST(mst_edges);
 
