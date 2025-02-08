@@ -19,11 +19,13 @@ jobs:
 
       - name: Configure, Build, and Test
         run: |
-          mkdir -p build
+          mkdir -p build  # Asegura que build exista antes de la compilación
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON  # Habilita la cobertura
           cmake --build .
           ctest --output-on-failure
+          # Asegura que el directorio build está creado y es accesible para gcovr
+          mkdir -p build  # Asegura que la carpeta 'build' existe antes de usar gcovr
           # Genera informe de cobertura en formato SonarQube
           gcovr --sonarqube --output build/coverage.xml  # Formato adecuado para SonarQube
 
