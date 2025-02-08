@@ -10,6 +10,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 set(SOURCES
     main.cpp  
     KruskalLib.cpp
+    TravelingLib.cpp  # Agregado TravelingLib.cpp
 )
 
 # Crear ejecutable principal
@@ -38,14 +39,15 @@ if(ENABLE_TESTING)
     # Archivos de pruebas
     set(TEST_SOURCES
         tests/kruskal.cpp
+        tests/traveling.cpp  # Agregado traveling.cpp para pruebas de Traveling
     )
 
-    # Crear un solo ejecutable de pruebas con KruskalLib.cpp incluido
-    add_executable(unit_test_kruskal ${TEST_SOURCES} KruskalLib.cpp)
+    # Crear un solo ejecutable de pruebas con KruskalLib.cpp y TravelingLib.cpp incluidos
+    add_executable(unit_test_all ${TEST_SOURCES} KruskalLib.cpp TravelingLib.cpp)
 
     # Enlazar GoogleTest
-    target_link_libraries(unit_test_kruskal PRIVATE gtest gtest_main)
+    target_link_libraries(unit_test_all PRIVATE gtest gtest_main)
 
     # Registrar pruebas con CTest
-    add_test(NAME unit_test_kruskal COMMAND unit_test_kruskal)
+    add_test(NAME unit_test_all COMMAND unit_test_all)
 endif()
