@@ -12,7 +12,20 @@
  * Cada arista tiene un vértice de inicio, un vértice de destino y un peso.
  */
 struct Edge {
-    int u, v, weight; ///< Vértices de la arista y su peso.
+    /**
+     * @brief Vértice de inicio de la arista.
+     */
+    int u;
+
+    /**
+     * @brief Vértice de destino de la arista.
+     */
+    int v;
+
+    /**
+     * @brief Peso de la arista.
+     */
+    int weight;
 
     /**
      * @brief Constructor para crear una arista.
