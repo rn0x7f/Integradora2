@@ -76,8 +76,10 @@ struct UnionFind {
      * @param u Nodo del cual encontrar el representante.
      * @return int El representante del conjunto al que pertenece el nodo.
      */
-    int find(int u) {
-        if (parent[u] != u) parent[u] = find(parent[u]);
+    int Find(int u) {
+        if (parent[u] != u) {
+            parent[u] = Find(parent[u]);  // Separé las declaraciones en dos líneas
+        }
         return parent[u];
     }
 
@@ -90,8 +92,8 @@ struct UnionFind {
      * @param v Nodo de otro conjunto.
      */
     void unite(int u, int v) {
-        u = find(u);
-        v = find(v);
+        u = Find(u);
+        v = Find(v);
         if (u != v) parent[u] = v;
     }
 };
