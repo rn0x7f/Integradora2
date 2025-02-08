@@ -57,7 +57,7 @@ if(ENABLE_TESTING)
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
         set(EXEC_NAME "unit_test_${TEST_NAME}")
         add_executable(${EXEC_NAME} ${TEST_FILE} 
-            KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
+        src/KruskalLib.cpp src/TravelingLib.cpp src/FordFulkersonLib.cpp src/NearestCentralLib.cpp)
         target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
         # Añadir flags de cobertura explícitamente
         if(ENABLE_COVERAGE)
