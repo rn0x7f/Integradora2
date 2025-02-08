@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/TravelingLib.h"
+#include <sstream>
 
 // Caso de prueba único para resolver el TSP con el grafo dado
 TEST(TravelingTest, BasicTSP) {
@@ -12,13 +13,18 @@ TEST(TravelingTest, BasicTSP) {
     };
 
     // El recorrido esperado ahora incluye el regreso al punto A
-    std::vector<int> expected_path = {0, 0, 1, 2, 3, 0, 0};  // A -> B -> C -> D -> A
-    
+    std::string expected_output = "A B C D A ";
+
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
 
-    // Verificar que el recorrido más corto encontrado sea el esperado
-    ASSERT_EQ(best_path.size(), expected_path.size());
-    for (int i = 0; i < best_path.size(); ++i) {
-        EXPECT_EQ(best_path[i], expected_path[i]);
-    }
+    // Capturar la salida de print_tsp en una stringstream
+    std::ostringstream oss;
+    std::streambuf* old_buf = std::cout.rdbuf(oss.rdbuf()); // Redirigir std::cout a oss
+
+    print_tsp(best_path);  // Llamar a la función de impresión
+
+    std::cout.rdbuf(old_buf); // Restaurar std::cout
+
+    // Comparar la salida generada con la salida esperada
+    ASSERT_EQ(oss.str(), expected_output);
 }
