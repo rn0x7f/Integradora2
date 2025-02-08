@@ -28,7 +28,7 @@ TEST(NearestCentralTest, ParsePoint) {
 
 TEST(NearestCentralTest, ReadCentrales) {
     // Asegurarse de que las cadenas tengan el formato adecuado.
-    std::istringstream input_stream("(400,300)\n(100,200)\n(300,400)\n");
+    std::istringstream input_stream("(400,300)\n(100,200)\n(300,400)\n(450,150)"); // El punto de consulta debe ser el último
     std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
 
     std::vector<Point> centrales;
@@ -39,9 +39,10 @@ TEST(NearestCentralTest, ReadCentrales) {
     EXPECT_EQ(centrales.size(), 3);
     EXPECT_EQ(centrales[0].x, 400);
     EXPECT_EQ(centrales[0].y, 300);
-    EXPECT_EQ(query.x, 300);
-    EXPECT_EQ(query.y, 400);
+    EXPECT_EQ(query.x, 450);  // Verificar que se leyeron correctamente las coordenadas del punto de consulta
+    EXPECT_EQ(query.y, 150);  // Verificar que se leyeron correctamente las coordenadas del punto de consulta
 }
+
 
 TEST(NearestCentralTest, PrintNearestCentral) {
     Point central = {450, 150};
