@@ -41,8 +41,9 @@ if(ENABLE_TESTING)
     # Archivos de pruebas
     set(TEST_SOURCES
         tests/kruskal.cpp
-        tests/traveling.cpp  # Agregado traveling.cpp para pruebas de Traveling
+        tests/traveling.cpp
         tests/ford_fulkerson.cpp
+        tests/nearest_central.cpp
     )
 
     # Crear ejecutable de pruebas para cada archivo de prueba
