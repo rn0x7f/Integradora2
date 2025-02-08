@@ -116,7 +116,7 @@ int FordFulkerson::ComputeMaxFlow() {
 /**
  * @brief Imprime el flujo máximo calculado.
  */
-void FordFulkerson::PrintMaxFlow() {
+void FordFulkerson::PrintMaxFlow() const {
     std::cout << "3." << std::endl;
     std::cout << maxFlow_ << std::endl;
 }

@@ -68,7 +68,7 @@ public:
     /**
      * @brief Imprime el flujo máximo calculado.
      */
-    void PrintMaxFlow();
+    void PrintMaxFlow() const;
 
 private:
     int n_;   ///< Número de nodos en el grafo.
