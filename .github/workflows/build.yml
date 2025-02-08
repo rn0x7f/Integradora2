@@ -46,7 +46,9 @@ jobs:
           fetch-depth: 0
 
       - name: List files in root directory (Sonar)
-        run: ls -l  # Verifica que coverage.xml esté disponible
+        run:  |
+          ls -l  # Verifica que coverage.xml esté disponible
+          cat coverage.xml  # Verifica el contenido del archivo de cobertura
 
       - name: Download Coverage Report
         uses: actions/download-artifact@v4  # Actualizado a la versión 4
