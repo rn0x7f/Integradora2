@@ -19,13 +19,13 @@ jobs:
 
       - name: Configure, Build, and Test
         run: |
-          mkdir -p build
+          mkdir -p build  # Crear la carpeta build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON  # Habilita la cobertura
           cmake --build .
           ctest --output-on-failure
           # Genera informe de cobertura (ejemplo para gcovr)
-          gcovr --exclude-throw-branches --xml-pretty --output coverage.xml
+          gcovr --xml --output coverage.xml  # Genera el archivo coverage.xml
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4  # Actualizado a la versión 4
