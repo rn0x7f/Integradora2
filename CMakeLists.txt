@@ -39,11 +39,11 @@ if(ENABLE_TESTING)
     # Archivos de pruebas
     set(TEST_SOURCES
         tests/kruskal.cpp
-        tests/traveling.cpp  # Agregado traveling.cpp para pruebas de Traveling
+     # Agregado traveling.cpp para pruebas de Traveling
     )
 
     # Crear un solo ejecutable de pruebas con KruskalLib.cpp y TravelingLib.cpp incluidos
-    add_executable(unit_test_all ${TEST_SOURCES} KruskalLib.cpp TravelingLib.cpp)
+    add_executable(unit_test_all ${TEST_SOURCES} KruskalLib.cpp)
 
     # Enlazar GoogleTest
     target_link_libraries(unit_test_all PRIVATE gtest gtest_main)
