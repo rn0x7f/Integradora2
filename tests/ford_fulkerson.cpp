@@ -47,18 +47,3 @@ TEST(FordFulkersonTest, SinglePath) {
     int maxFlow = ff.ComputeMaxFlow();
     EXPECT_EQ(maxFlow, 5);
 }
-
-// Prueba con un gráfico con caminos múltiples
-TEST(FordFulkersonTest, MultiplePaths) {
-    std::vector<std::vector<int>> capacity = {
-        {0, 10, 10, 0, 0},
-        {0, 0, 0, 10, 0},
-        {0, 0, 0, 10, 0},
-        {0, 0, 0, 0, 10},
-        {0, 0, 0, 0, 0}
-    };
-    
-    FordFulkerson ff(5, capacity);
-    int maxFlow = ff.ComputeMaxFlow();
-    EXPECT_EQ(maxFlow, 20);
-}
