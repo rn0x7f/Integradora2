@@ -17,15 +17,37 @@ Point parse_point(const std::string& s) {
  */
 void read_centrales(int N, std::vector<Point>& centrales, Point& query) {
     centrales.reserve(N);
+    
     for (int i = 0; i < N; ++i) {
         std::string s;
         std::getline(std::cin >> std::ws, s);
-        centrales.push_back(parse_point(s));
+        
+        // Verificar si la línea no está vacía y tiene un formato correcto
+        if (!s.empty()) {
+            try {
+                centrales.push_back(parse_point(s));
+            } catch (const std::exception& e) {
+                std::cerr << "Error al parsear punto: " << s << std::endl;
+                continue;  // Si ocurre un error, continuamos con la siguiente línea
+            }
+        } else {
+            std::cerr << "Línea vacía detectada, ignorando..." << std::endl;
+        }
     }
 
     std::string query_s;
     std::getline(std::cin >> std::ws, query_s);
-    query = parse_point(query_s);
+
+    // Verificar que la línea del punto de consulta no esté vacía
+    if (!query_s.empty()) {
+        try {
+            query = parse_point(query_s);
+        } catch (const std::exception& e) {
+            std::cerr << "Error al parsear punto de consulta: " << query_s << std::endl;
+        }
+    } else {
+        std::cerr << "Línea vacía detectada para el punto de consulta, ignorando..." << std::endl;
+    }
 }
 
 /**
