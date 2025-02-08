@@ -33,6 +33,6 @@ struct UnionFind {
 
 std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vector<int>>& distance_matrix);
 
-void printMST(const std::vector<std::pair<int, int>>& mst_edges);
+void print_mst(const std::vector<std::pair<int, int>>& mst_edges);
 
 #endif // KRUSKALLIB_H

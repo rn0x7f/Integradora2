@@ -15,7 +15,7 @@ int main() {
 
     std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
     
-    printMST(mst_edges);
+    print_mst(mst_edges);
 
     return 0;
 }

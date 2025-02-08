@@ -1,7 +1,7 @@
 
 #include "include/KruskalLib.h"
 
-std::vector<std::pair<int, int>> kruskalMST(int N, const std::vector<std::vector<int>>& distance_matrix) {
+std::vector<std::pair<int, int>> kruskal_mst(int N, const std::vector<std::vector<int>>& distance_matrix) {
     std::vector<Edge> edges;
     for (int i = 0; i < N; ++i) {
         for (int j = i + 1; j < N; ++j) {
@@ -26,7 +26,7 @@ std::vector<std::pair<int, int>> kruskalMST(int N, const std::vector<std::vector
     return mst_edges;
 }
 
-void printMST(const std::vector<std::pair<int, int>>& mst_edges) {
+void print_mst(const std::vector<std::pair<int, int>>& mst_edges) {
     std::cout << "1." << std::endl;
     for (const auto& edge : mst_edges) {
         char u = 'A' + edge.first;
