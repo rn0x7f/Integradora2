@@ -94,7 +94,9 @@ struct UnionFind {
     void Unite(int u, int v) {
         u = Find(u);
         v = Find(v);
-        if (u != v) parent[u] = v;
+        if (u != v) {
+            parent[u] = v;  // Separé la instrucción en una línea
+        }
     }
 };
 
