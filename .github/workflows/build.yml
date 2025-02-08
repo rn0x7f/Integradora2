@@ -25,7 +25,7 @@ jobs:
           cmake --build .
           ctest --output-on-failure
           # Genera el informe de cobertura en la raíz del proyecto, no en build
-          gcovr --sonarqube --output ../coverage.xml  # Genera coverage.xml en la raíz
+          gcovr --sonarqube --output ../coverage.xml  # Genera coverage.xml en la raíz del proyecto
 
       - name: List files in root directory
         run: ls -l  # Verifica que coverage.xml se haya generado en la raíz
@@ -53,6 +53,9 @@ jobs:
         with:
           name: coverage-report  # Nombre del artefacto cargado
           path: .  # Ruta donde se descargará el reporte
+
+      - name: Check Coverage Report Content
+        run: cat coverage.xml  # Revisa el contenido del archivo de cobertura antes de enviarlo a SonarQube
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v3
