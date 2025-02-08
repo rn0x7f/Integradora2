@@ -24,8 +24,8 @@ jobs:
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON  # Habilita la cobertura
           cmake --build .
           ctest --output-on-failure
-          # Genera el informe de cobertura en la raíz del proyecto, no en build
-          gcovr --sonarqube --output ../coverage.xml  # Genera coverage.xml en la raíz del proyecto
+          # Ejecuta gcovr en el directorio correcto para generar coverage.xml
+          gcovr -r . --sonarqube --output ../coverage.xml  # Genera coverage.xml en la raíz del proyecto
 
       - name: List files in root directory
         run: ls -l  # Verifica que coverage.xml se haya generado en la raíz
