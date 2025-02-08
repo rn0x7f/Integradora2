@@ -42,12 +42,18 @@ if(ENABLE_TESTING)
         tests/traveling.cpp  # Agregado traveling.cpp para pruebas de Traveling
     )
 
-    # Crear un solo ejecutable de pruebas con KruskalLib.cpp y TravelingLib.cpp incluidos
-    add_executable(unit_test_all ${TEST_SOURCES} KruskalLib.cpp TravelingLib.cpp)
+    # Crear ejecutable de pruebas para cada archivo de prueba
+    foreach(TEST_FILE ${TEST_SOURCES})
+        get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
+        
+        # Cambiar "test" por algo más único si es necesario
+        set(EXEC_NAME "unit_test_${TEST_NAME}")
+        add_executable(${EXEC_NAME} ${TEST_FILE} KruskalLib.cpp TravelingLib.cpp)
 
-    # Enlazar GoogleTest
-    target_link_libraries(unit_test_all PRIVATE gtest gtest_main)
+        # Enlazar GoogleTest
+        target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
 
-    # Registrar pruebas con CTest
-    add_test(NAME unit_test_all COMMAND unit_test_all)
+        # Registrar pruebas con CTest
+        add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
+    endforeach()
 endif()
