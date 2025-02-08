@@ -36,14 +36,14 @@ public:
          * 
          * @return int Capacidad restante.
          */
-        int remaining() const;
+        int Remaining() const;
 
         /**
          * @brief Agrega flujo a la arista y actualiza la arista inversa.
          * 
          * @param amount Cantidad de flujo a agregar.
          */
-        void addFlow(int amount);
+        void add_flow(int amount);
     };
 
     /**
@@ -63,12 +63,12 @@ public:
      * 
      * @return int Flujo máximo encontrado.
      */
-    int computeMaxFlow();
+    int compute_max_flow();
 
     /**
      * @brief Imprime el flujo máximo calculado.
      */
-    void printMaxFlow();
+    void print_max_flow();
 
 private:
     int n_;   ///< Número de nodos en el grafo.

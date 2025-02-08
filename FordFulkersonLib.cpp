@@ -10,14 +10,14 @@ FordFulkerson::FFEdge::FFEdge(int to, int capacity)
 /**
  * @brief Retorna la capacidad restante en la arista.
  */
-int FordFulkerson::FFEdge::remaining() const {
+int FordFulkerson::FFEdge::Remaining() const {
     return capacity - flow;
 }
 
 /**
  * @brief Agrega flujo a la arista y actualiza la arista inversa.
  */
-void FordFulkerson::FFEdge::addFlow(int amount) {
+void FordFulkerson::FFEdge::add_flow(int amount) {
     flow += amount;
     reverse->flow -= amount;
 }
@@ -52,7 +52,7 @@ FordFulkerson::FordFulkerson(int n, const std::vector<std::vector<int>>& capacit
  *
  * @return int Flujo máximo encontrado.
  */
-int FordFulkerson::computeMaxFlow() {
+int FordFulkerson::compute_max_flow() {
     int source = 0;
     int sink = n_ - 1;
     maxFlow_ = 0;
@@ -68,7 +68,7 @@ int FordFulkerson::computeMaxFlow() {
             int u = q.front();
             q.pop();
             for (FFEdge* edge : ffAdj_[u]) {
-                if (pred[edge->to] == nullptr && edge->remaining() > 0 && edge->to != source) {
+                if (pred[edge->to] == nullptr && edge->Remaining() > 0 && edge->to != source) {
                     pred[edge->to] = edge;
                     q.push(edge->to);
                 }
@@ -83,12 +83,12 @@ int FordFulkerson::computeMaxFlow() {
         int pathFlow = INT_MAX;
         // Se determina el flujo mínimo en el camino aumentante
         for (int v = sink; v != source; v = pred[v]->reverse->to) {
-            pathFlow = std::min(pathFlow, pred[v]->remaining());
+            pathFlow = std::min(pathFlow, pred[v]->Remaining());
         }
 
         // Se actualiza el flujo a lo largo del camino aumentante
         for (int v = sink; v != source; v = pred[v]->reverse->to) {
-            pred[v]->addFlow(pathFlow);
+            pred[v]->add_flow(pathFlow);
         }
 
         maxFlow_ += pathFlow;
@@ -100,7 +100,7 @@ int FordFulkerson::computeMaxFlow() {
 /**
  * @brief Imprime el flujo máximo calculado.
  */
-void FordFulkerson::printMaxFlow() {
+void FordFulkerson::print_max_flow() {
     std::cout << "3." << std::endl;
     std::cout << maxFlow_ << std::endl;
 }
