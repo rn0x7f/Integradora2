@@ -18,8 +18,20 @@ set(SOURCES
 # Crear ejecutable principal
 add_executable(unit_test ${SOURCES})
 
-# Opciones
+# Opciones para pruebas y cobertura
 option(ENABLE_TESTING "Enable a Unit Testing build." ON)
+option(ENABLE_COVERAGE "Enable code coverage instrumentation." OFF)
+
+# Si se habilita la cobertura, se agregan las flags necesarias para GCC/Clang
+if(ENABLE_COVERAGE)
+    message(STATUS "Enabling code coverage flags")
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        # Las banderas --coverage generan los archivos .gcno y .gcda necesarios para gcov/gcovr.
+        # Se recomienda usar -O0 para evitar que las optimizaciones interfieran con la cobertura.
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -O0")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+    endif()
+endif()
 
 # Descarga GoogleTest usando FetchContent
 include(FetchContent)
@@ -30,13 +42,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# Si se habilitan las pruebas, agrega GoogleTest y las pruebas unitarias
+# Si se habilitan las pruebas, se configuran las pruebas unitarias
 if(ENABLE_TESTING)
     enable_testing()
-
-    # Activar cobertura de código con GCC
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 
     # Archivos de pruebas
     set(TEST_SOURCES
@@ -46,18 +54,19 @@ if(ENABLE_TESTING)
         tests/nearest_central.cpp
     )
 
-    # Crear ejecutable de pruebas para cada archivo de prueba
+    # Para cada archivo de prueba se crea un ejecutable y se registra la prueba en CTest
     foreach(TEST_FILE ${TEST_SOURCES})
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
         
-        # Cambiar "test" por algo más único si es necesario
+        # Se define un nombre único para el ejecutable de prueba
         set(EXEC_NAME "unit_test_${TEST_NAME}")
-        add_executable(${EXEC_NAME} ${TEST_FILE} KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
+        add_executable(${EXEC_NAME} ${TEST_FILE} 
+            KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
 
-        # Enlazar GoogleTest
+        # Se enlaza con GoogleTest
         target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
 
-        # Registrar pruebas con CTest
+        # Se registra la prueba
         add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
     endforeach()
 endif()
