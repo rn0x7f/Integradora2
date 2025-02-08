@@ -12,6 +12,7 @@ set(SOURCES
     KruskalLib.cpp
     TravelingLib.cpp  # Agregado TravelingLib.cpp
     FordFulkersonLib.cpp
+    NearestCentralLib.cpp
 )
 
 # Crear ejecutable principal
@@ -49,7 +50,7 @@ if(ENABLE_TESTING)
         
         # Cambiar "test" por algo más único si es necesario
         set(EXEC_NAME "unit_test_${TEST_NAME}")
-        add_executable(${EXEC_NAME} ${TEST_FILE} KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp)
+        add_executable(${EXEC_NAME} ${TEST_FILE} KruskalLib.cpp TravelingLib.cpp FordFulkersonLib.cpp NearestCentralLib.cpp)
 
         # Enlazar GoogleTest
         target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)

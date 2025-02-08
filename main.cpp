@@ -7,6 +7,7 @@
 #include "include/KruskalLib.h"
 #include "include/TravelingLib.h"
 #include "include/FordFulkersonLib.h"
+#include "include/NearestCentralLib.h"
 
 int main() {
     int N;
@@ -19,31 +20,32 @@ int main() {
             std::cin >> distance_matrix[i][j];
         }
     }
-    // Ejecutar Kruskal para encontrar el MST
     std::vector<std::pair<int, int>> mst_edges = kruskal_mst(N, distance_matrix);
-    // Imprimir el MST
-    print_mst(mst_edges);
 
     // Parte 2: Resolver el Problema del Viajante de Comercio (TSP)
     std::vector<int> tsp_path = solve_tsp(N, distance_matrix);
-    // Imprimir el mejor camino encontrado para el TSP
-    print_tsp(tsp_path);
 
-    // Parte 3 Ford-Fulkerson
-    // Read capacity matrix for Ford-Fulkerson
+    // Parte 3: Algoritmo de Ford-Fulkerson
     std::vector<std::vector<int>> capacity_matrix(N, std::vector<int>(N));
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             std::cin >> capacity_matrix[i][j];
         }
     }
-
-    // Crear una instancia de FordFulkerson y calcular el flujo máximo
     FordFulkerson ff(N, capacity_matrix);
     ff.ComputeMaxFlow();
-    ff.PrintMaxFlow();
 
-    
+    // Parte 4: Encontrar la central más cercana
+    std::vector<Point> centrales;
+    Point query;
+    read_centrales(N, centrales, query);
+    Point closest_central = find_nearest_central(centrales, query);
+
+    // Imprimir resultados
+    print_mst(mst_edges);
+    print_tsp(tsp_path);
+    ff.PrintMaxFlow();
+    print_nearest_central(closest_central);
 
     return 0;
 }
