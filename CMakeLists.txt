@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Ruta a los archivos de cabecera
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Archivos fuente principales
+# Archivos fuente principales (no incluimos main.cpp aquí)
 set(SOURCES
     src/KruskalLib.cpp
     src/TravelingLib.cpp
@@ -55,14 +55,18 @@ if(ENABLE_TESTING)
     foreach(TEST_FILE ${TEST_SOURCES})
         get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
         set(EXEC_NAME "unit_test_${TEST_NAME}")
+        
+        # Ahora no incluimos main.cpp en las pruebas unitarias
         add_executable(${EXEC_NAME} ${TEST_FILE} 
-        src/KruskalLib.cpp src/TravelingLib.cpp src/FordFulkersonLib.cpp src/NearestCentralLib.cpp)
+            src/KruskalLib.cpp src/TravelingLib.cpp src/FordFulkersonLib.cpp src/NearestCentralLib.cpp)
         target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
+        
         # Añadir flags de cobertura explícitamente
         if(ENABLE_COVERAGE)
             target_compile_options(${EXEC_NAME} PRIVATE --coverage)
             target_link_libraries(${EXEC_NAME} PRIVATE --coverage)
         endif()
+        
         add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
     endforeach()
 endif()
