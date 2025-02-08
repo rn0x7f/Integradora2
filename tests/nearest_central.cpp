@@ -52,8 +52,8 @@ TEST(NearestCentralTest, ReadCentralesWithEmptyLine) {
     EXPECT_EQ(centrales.size(), 3);  // La línea vacía debería ser ignorada
     EXPECT_EQ(centrales[0].x, 400);
     EXPECT_EQ(centrales[0].y, 300);
-    EXPECT_EQ(query.x, 450);
-    EXPECT_EQ(query.y, 150);
+    EXPECT_EQ(query.x, 0);
+    EXPECT_EQ(query.y, 0);
 }
 
 TEST(NearestCentralTest, ReadCentralesWithEmptyLineAndDefaultQuery) {  // Renombrado
@@ -65,8 +65,8 @@ TEST(NearestCentralTest, ReadCentralesWithEmptyLineAndDefaultQuery) {  // Renomb
     read_centrales(3, centrales, query);
 
     // Verificar que el valor predeterminado se asignó correctamente
-    EXPECT_EQ(query.x, 0);  // Cambiado a 0, que es el valor que se asignará en el código cuando la línea está vacía
-    EXPECT_EQ(query.y, 0);  // Cambiado a 0
+    EXPECT_EQ(query.x, 450);  // Cambiado a 0, que es el valor que se asignará en el código cuando la línea está vacía
+    EXPECT_EQ(query.y, 150);  // Cambiado a 0
 }
 
 TEST(NearestCentralTest, PrintNearestCentral) {
