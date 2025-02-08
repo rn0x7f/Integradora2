@@ -46,9 +46,11 @@ void read_centrales(int N, std::vector<Point>& centrales, Point& query) {
             std::cerr << "Error al parsear punto de consulta: " << query_s << std::endl;
         }
     } else {
-        std::cerr << "Línea vacía detectada para el punto de consulta, ignorando..." << std::endl;
+        std::cerr << "Línea vacía detectada para el punto de consulta, asignando valor predeterminado..." << std::endl;
+        query = Point(0, 0);  // Asignar un valor predeterminado
     }
 }
+
 
 /**
  * @brief Calcula la distancia euclidiana al cuadrado entre dos puntos.
