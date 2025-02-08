@@ -6,12 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 # Ruta a los archivos de cabecera
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-# Archivos fuente (solo .cpp, sin incluir los .h)
+# Archivos fuente principales
 set(SOURCES
-    main.cpp  # main.cpp está en la raíz del proyecto
+    main.cpp  
     KruskalLib.cpp
 )
 
+# Crear ejecutable principal
 add_executable(unit_test ${SOURCES})
 
 # Opciones
@@ -33,22 +34,14 @@ if(ENABLE_TESTING)
     # Archivos de pruebas
     set(TEST_SOURCES
         tests/kruskal.cpp
-        # tests/test1.cpp
-        # tests/test2.cpp
     )
 
-    # Crear ejecutable de pruebas para cada archivo de prueba
-    foreach(TEST_FILE ${TEST_SOURCES})
-        get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
-        
-        # Cambiar "test" por algo más único si es necesario
-        set(EXEC_NAME "unit_test_${TEST_NAME}")
-        add_executable(${EXEC_NAME} ${TEST_FILE})
+    # Crear un solo ejecutable de pruebas con KruskalLib.cpp incluido
+    add_executable(unit_test_kruskal ${TEST_SOURCES} KruskalLib.cpp)
 
-        # Enlazar GoogleTest
-        target_link_libraries(${EXEC_NAME} PRIVATE gtest gtest_main)
+    # Enlazar GoogleTest
+    target_link_libraries(unit_test_kruskal PRIVATE gtest gtest_main)
 
-        # Registrar pruebas con CTest
-        add_test(NAME ${EXEC_NAME} COMMAND ${EXEC_NAME})
-    endforeach()
+    # Registrar pruebas con CTest
+    add_test(NAME unit_test_kruskal COMMAND unit_test_kruskal)
 endif()
