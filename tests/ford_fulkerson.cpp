@@ -62,17 +62,3 @@ TEST(FordFulkersonTest, MultiplePaths) {
     int maxFlow = ff.ComputeMaxFlow();
     EXPECT_EQ(maxFlow, 20);
 }
-
-// Prueba con un flujo mayor a la capacidad total
-TEST(FordFulkersonTest, OverflowFlow) {
-    std::vector<std::vector<int>> capacity = {
-        {0, 20, 10, 0},
-        {0, 0, 0, 10},
-        {0, 0, 0, 10},
-        {0, 0, 0, 0}
-    };
-    
-    FordFulkerson ff(4, capacity);
-    int maxFlow = ff.ComputeMaxFlow();
-    EXPECT_EQ(maxFlow, 10);  // El flujo no puede superar la capacidad total
-}
