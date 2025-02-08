@@ -53,8 +53,8 @@ int main() {
 
     // Crear una instancia de FordFulkerson y calcular el flujo máximo
     FordFulkerson ff(N, capacity_matrix);
-    ff.compute_max_flow();
-    ff.print_max_flow();
+    ff.ComputeMaxFlow();
+    ff.PrintMaxFlow();
 
     
 
