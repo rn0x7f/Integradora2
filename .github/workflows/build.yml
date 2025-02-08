@@ -30,6 +30,9 @@ jobs:
       - name: List files in root directory
         run: ls -l  # Verifica que coverage.xml se haya generado en la raíz
 
+      - name: List all files recursively
+        run: find . -type f  # Paso adicional para ver todos los archivos y confirmar la ubicación de coverage.xml
+
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4  # Actualizado a la versión 4
         with:
@@ -48,6 +51,9 @@ jobs:
       - name: List files in root directory (Sonar)
         run: ls -l  # Verifica que coverage.xml esté disponible
 
+      - name: List all files recursively (Sonar)
+        run: find . -type f  # Paso adicional para ver la estructura completa y confirmar la presencia de coverage.xml
+
       - name: Download Coverage Report
         uses: actions/download-artifact@v4  # Actualizado a la versión 4
         with:
@@ -55,7 +61,10 @@ jobs:
           path: .  # Ruta donde se descargará el reporte
 
       - name: Check Coverage Report Content
-        run: cat coverage.xml  # Revisa el contenido del archivo de cobertura antes de enviarlo a SonarQube
+        run: |
+          echo "Mostrando las primeras 100 líneas de coverage.xml:"
+          head -n 100 coverage.xml  # Revisa el contenido del archivo de cobertura antes de enviarlo a SonarQube
+          echo "Fin del contenido del coverage.xml"
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v3
