@@ -17,28 +17,24 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y cmake build-essential gcovr  # Agregado gcovr para informes de cobertura
 
-      - name: Create build directory
-        run: mkdir -p build  # Asegura que build exista antes de la compilación
-
       - name: Configure, Build, and Test
         run: |
+          mkdir -p build  # Asegura que build exista antes de la compilación
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON  # Habilita la cobertura
           cmake --build .
           ctest --output-on-failure
-          # Asegura que el directorio build esté creado antes de usar gcovr
-          mkdir -p build  # Asegura que la carpeta 'build' existe antes de usar gcovr
-          # Genera informe de cobertura en formato SonarQube
-          gcovr --sonarqube --output build/coverage.xml  # Formato adecuado para SonarQube
+          # Genera el informe de cobertura en la raíz del proyecto, no en build
+          gcovr --sonarqube --output ../coverage.xml  # Genera coverage.xml en la raíz
 
-      - name: List files in build directory
-        run: ls -l build  # Verifica que coverage.xml se haya generado
+      - name: List files in root directory
+        run: ls -l  # Verifica que coverage.xml se haya generado en la raíz
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4  # Actualizado a la versión 4
         with:
-          name: coverage-report  # Asegúrate de que este nombre coincida en la descarga
-          path: build/coverage.xml
+          name: coverage-report
+          path: coverage.xml  # Subir desde la raíz del proyecto
 
   sonar_analysis:
     name: SonarQube Analysis
@@ -49,18 +45,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List files in build directory (Sonar)
-        run: ls -l build  # Verifica que coverage.xml esté disponible para SonarQube
+      - name: List files in root directory (Sonar)
+        run: ls -l  # Verifica que coverage.xml esté disponible
 
       - name: Download Coverage Report
         uses: actions/download-artifact@v4  # Actualizado a la versión 4
         with:
-          name: coverage-report  # Debe coincidir con el nombre utilizado en la carga
-          path: build/
+          name: coverage-report  # Nombre del artefacto cargado
+          path: .  # Ruta donde se descargará el reporte
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v3
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_COVERAGE_REPORT_PATHS: build/coverage.xml  # Ruta del informe de cobertura
+          SONAR_COVERAGE_REPORT_PATHS: coverage.xml  # Ruta del archivo de cobertura en la raíz
