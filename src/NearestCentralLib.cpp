@@ -22,23 +22,23 @@ void read_centrales(int N, std::vector<Point>& centrales, Point& query) {
         std::string s;
         std::getline(std::cin >> std::ws, s);
         
-        // Verificar si la línea no está vacía y tiene un formato correcto
         if (!s.empty()) {
             try {
                 centrales.push_back(parse_point(s));
             } catch (const std::exception& e) {
                 std::cerr << "Error al parsear punto: " << s << std::endl;
-                continue;  // Si ocurre un error, continuamos con la siguiente línea
+                // Continuar sin agregar el punto inválido al vector
+                continue;
             }
         } else {
             std::cerr << "Línea vacía detectada, ignorando..." << std::endl;
         }
     }
 
+    // Leer el punto de consulta
     std::string query_s;
     std::getline(std::cin >> std::ws, query_s);
 
-    // Verificar que la línea del punto de consulta no esté vacía
     if (!query_s.empty()) {
         try {
             query = parse_point(query_s);
@@ -47,7 +47,7 @@ void read_centrales(int N, std::vector<Point>& centrales, Point& query) {
         }
     } else {
         std::cerr << "Línea vacía detectada para el punto de consulta, asignando valor predeterminado..." << std::endl;
-        query = Point(0, 0);  // Asignar un valor predeterminado
+        query = Point(0, 0);  // Valor predeterminado si la línea está vacía
     }
 }
 
