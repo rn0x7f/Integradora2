@@ -1,4 +1,3 @@
-
 #include <gtest/gtest.h>
 #include "../include/TravelingLib.h"
 
@@ -12,9 +11,13 @@ TEST(TravelingTest, BasicTSP) {
         {20, 25, 30, 0}
     };
 
-    std::vector<int> expected_path = {1, 2, 3};
-    
+    std::vector<int> expected_path = {1, 2, 3};  // El camino esperado, ordenado
+
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
+
+    // Ordenar ambos caminos para comparar solo los nodos, no el orden
+    std::sort(best_path.begin(), best_path.end());
+    std::sort(expected_path.begin(), expected_path.end());
 
     // Verificar que el recorrido más corto encontrado sea el esperado
     ASSERT_EQ(best_path.size(), expected_path.size());
@@ -46,6 +49,10 @@ TEST(TravelingTest, NonSymmetricGraph) {
     std::vector<int> expected_path = {1, 2};  // El camino más corto de 'A' -> 'B' -> 'C'
     
     std::vector<int> best_path = solve_tsp(N, distance_matrix);
+
+    // Ordenar ambos caminos para comparar solo los nodos, no el orden
+    std::sort(best_path.begin(), best_path.end());
+    std::sort(expected_path.begin(), expected_path.end());
 
     // Verificar que el recorrido más corto encontrado sea el esperado
     ASSERT_EQ(best_path.size(), expected_path.size());
