@@ -27,6 +27,7 @@ TEST(NearestCentralTest, ParsePoint) {
 }
 
 TEST(NearestCentralTest, ReadCentrales) {
+    // Asegurarse de que las cadenas tengan el formato adecuado.
     std::istringstream input_stream("(400,300)\n(100,200)\n(300,400)\n");
     std::cin.rdbuf(input_stream.rdbuf());  // Redirigir cin a input_stream
 
