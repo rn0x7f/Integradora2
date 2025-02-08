@@ -8,19 +8,6 @@
 #include "include/TravelingLib.h"
 #include "include/FordFulkersonLib.h"
 
-
-// Structure for Ford-Fulkerson's Edge
-struct FFEdge {
-    int to, capacity, flow;
-    FFEdge* reverse;
-    FFEdge(int to, int capacity) : to(to), capacity(capacity), flow(0), reverse(nullptr) {}
-    int remaining() { return capacity - flow; }
-    void add_flow(int amount) {
-        flow += amount;
-        reverse->flow -= amount;
-    }
-};
-
 int main() {
     int N;
     std::cin >> N;
