@@ -40,13 +40,13 @@ jobs:
           path: coverage.xml
 
       - name: Generate Coverage Report
-            run: |
-              cd build
-              gcovr --root .. \
-                    --sonarqube \
-                    --exclude '_deps' \
-                    --exclude 'tests' \
-                    --output ../coverage.xml
+        run: |
+          cd build
+          gcovr --root .. \
+                --sonarqube \
+                --exclude '_deps' \
+                --exclude 'tests' \
+                --output ../coverage.xml
 
   sonar_analysis:
     name: SonarQube Analysis
