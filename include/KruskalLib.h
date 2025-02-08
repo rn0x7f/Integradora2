@@ -91,7 +91,7 @@ struct UnionFind {
      * @param u Nodo de un conjunto.
      * @param v Nodo de otro conjunto.
      */
-    void unite(int u, int v) {
+    void Unite(int u, int v) {
         u = Find(u);
         v = Find(v);
         if (u != v) parent[u] = v;
