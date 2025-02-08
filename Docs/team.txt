@@ -1,0 +1,10 @@
+Todos hicimos de todo, codigo fuente, pruebas unitarias, resolucion de issues de sonar qube y cuidado con la covertura de codigo
+Renato García Morán A017992873
+Ignacio Solís Montes A01751213
+Vicente Jesús Ramos A01750996
+
+GITHUB URL:
+https://github.com/rn0x7f/Integradora2
+
+SONARQUBE URL:
+https://sonarqube.felipecastillorendon.online/dashboard?id=integradora-2
